@@ -17,7 +17,7 @@ void on_button_toggled()
    curve_view->SetEditMode(edit_button->get_active());
 }
 
-void on_segments_changed()
+void OnSegmentsChanged()
 {
     int delta = segments_button->get_value() - segments;
     if(delta < 0 )
@@ -34,9 +34,8 @@ void on_segments_changed()
     segments = segments_button->get_value();
 }
 
-void on_width_changed()
+void OnZoomChanged()
 {
-    std::cout << "WIDGHT: " << width_button->get_value() << std::endl;
 }
 
 int main(int argc, char **argv)
@@ -48,7 +47,7 @@ int main(int argc, char **argv)
             Gtk::Application::create(argc, argv, "org.bytetrail.hexmap");
     Gtk::Window window;
     window.set_default_size(800, 600);
-    window.set_title("River Test");
+    window.set_title("FlexTrack Test");
 
     Gtk::Box h_box(Gtk::ORIENTATION_HORIZONTAL, 4);
     Gtk::Grid grid;
@@ -61,7 +60,7 @@ int main(int argc, char **argv)
     segments_button = std::unique_ptr<Gtk::SpinButton>(new Gtk::SpinButton());
     segments_button->set_adjustment(seg_adjustment);
     grid.attach(*segments_button, 1, 0, 1, 1);
-    segments_button->signal_value_changed().connect(sigc::ptr_fun(&on_segments_changed));
+    segments_button->signal_value_changed().connect(sigc::ptr_fun(&OnSegmentsChanged));
 
     Gtk::Label label_width("Zoom: ");
     label_width.set_alignment(Gtk::Align::ALIGN_END);
@@ -71,7 +70,7 @@ int main(int argc, char **argv)
     width_button = std::unique_ptr<Gtk::SpinButton>(new Gtk::SpinButton());
     width_button->set_adjustment(width_adjustment);
     grid.attach(*width_button, 1, 1, 1, 1);
-    segments_button->signal_value_changed().connect(sigc::ptr_fun(&on_width_changed));
+    segments_button->signal_value_changed().connect(sigc::ptr_fun(&OnZoomChanged));
 
     edit_button = new Gtk::CheckButton();
     edit_button->set_label("Editing");

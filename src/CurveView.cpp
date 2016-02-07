@@ -1,7 +1,6 @@
 #include <iostream>
 #include <cmath>
 #include "CurveView.h"
-#include "BezierCurve.h"
 
 namespace ByteTrail
 {
@@ -140,20 +139,20 @@ bool CurveView::on_draw(const Cairo::RefPtr<Cairo::Context>& cr)
             }
         }
     }
-    draw_curves(cr);
+    DrawCurves(cr);
 
   return true;
 }
 
-void CurveView::draw_curves(const Cairo::RefPtr<Cairo::Context>& cr)
+void CurveView::DrawCurves(const Cairo::RefPtr<Cairo::Context> &cr)
 {
      for(auto & curve : _curves)
      {
-         RenderCurve(cr, curve);
+         DrawCurve(cr, curve);
      }
 }
 
-void CurveView::RenderCurve(const Cairo::RefPtr<Cairo::Context>& cr,
+void CurveView::DrawCurve(const Cairo::RefPtr<Cairo::Context>& cr,
         std::shared_ptr<BezierCurve> & curve) const
 {
     cr->set_source_rgb(1.0, 0, 0);
@@ -179,30 +178,6 @@ void CurveView::RenderCurve(const Cairo::RefPtr<Cairo::Context>& cr,
         cr->line_to(p.x, p.y);
         cr->stroke();
     }
-}
-
-
-void CurveView::draw_text(const Cairo::RefPtr<Cairo::Context>& cr)
-{
-    Pango::FontDescription font;
-
-    font.set_family("Monospace");
-    font.set_weight(Pango::WEIGHT_LIGHT);
-    Glib::RefPtr<Pango::Layout> layout = create_pango_layout("0");
-
-    layout->set_font_description(font);
-
-    int text_width;
-    int text_height;
-
-    //get the text dimensions (it updates the variables -- by reference)
-    layout->get_pixel_size(text_width, text_height);
-
-    // Position the text in the middle
-    cr->set_source_rgb(0,0,0);
-
-    layout->show_in_cairo_context(cr);
-
 }
 
 bool CurveView::on_button_press(GdkEventButton * event)
@@ -278,7 +253,7 @@ bool CurveView::on_button_motion(GdkEventMotion * event)
         double cx = event->x - p.x;
         double cy = event->y - p.y;
         _active_curve->SetControlPoint(event->x, event->y, _drag_idx);
-        int attached_index;
+        unsigned attached_index = 0;
         if(_drag_idx == 1)
         {
             if(_attached_active_curve !=nullptr)

@@ -12,4 +12,4 @@ guidelines will be published once complete.
 
 #Building
 
-The initial build environment is a Code::Blocks project. The autotools build scripts have not yet been added.
+

@@ -44,14 +44,13 @@ class CurveView : public Gtk::DrawingArea
 
         std::vector<std::shared_ptr<ByteTrail::BezierCurve>> _curves;
 
-        void RenderCurve(const Cairo::RefPtr<Cairo::Context>& cr,
+        void DrawCurve(const Cairo::RefPtr<Cairo::Context>& cr,
                          std::shared_ptr<BezierCurve> & curve) const;
         std::unique_ptr<BezierCurve> CreateCurve() const;
 
-        void draw_text(const Cairo::RefPtr<Cairo::Context>& cr);
-        void draw_curves(const Cairo::RefPtr<Cairo::Context>& cr);
-        void draw_curve(const Cairo::RefPtr<Cairo::Context>& cr, int idx);
-        void parallel_curve(const Cairo::RefPtr<Cairo::Context>& cr, gdouble t, gdouble x, gdouble y);
+        void DrawText(const Cairo::RefPtr<Cairo::Context> &cr);
+        void DrawCurves(const Cairo::RefPtr<Cairo::Context> &cr);
+        void ParallelCurve(const Cairo::RefPtr<Cairo::Context> &cr, gdouble t, gdouble x, gdouble y);
 
         bool on_button_press(GdkEventButton * event);
         bool on_button_motion(GdkEventMotion * event);
