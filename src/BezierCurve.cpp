@@ -52,6 +52,16 @@ namespace ByteTrail {
         }
     }
 
+    void BezierCurve::Move(double cx, double cy) {
+        if(cx != 0 || cy != 0) {
+            for(int i=0; i<kControlPoints; i++) {
+                _control_points[i].x += cx;
+                _control_points[i].y += cy;
+            }
+            _control_point_modified = true;
+        }
+    }
+
     const std::vector<Point> &BezierCurve::GetCurve(unsigned idx) {
         if (_resolution_modified) {
             ResizeCurve();

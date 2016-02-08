@@ -21,9 +21,13 @@ namespace ByteTrail {
         void SetControlPoint(const Point & point, unsigned index);
         void SetControlPoint(double x, double y, unsigned index);
 
+        void Move(double cx, double cy);
+
         const std::vector<Point> & GetCurve(unsigned idx);
 
         const std::vector<Point> & GetTangentPoints() const;
+
+
 
     protected:
         static constexpr float kDefaultResolution = 0.025;

@@ -1,6 +1,8 @@
 #ifndef BYTETRAIL_FLEXTRACKSEGMENT_H
 #define BYTETRAIL_FLEXTRACKSEGMENT_H
 
+#include<memory>
+
 #include "TrackSegment.h"
 
 namespace ByteTrail
@@ -13,6 +15,7 @@ namespace ByteTrail
             virtual ~FlexTrackSegment();
         protected:
         private:
+        std::shared_ptr<BezierCurve> _curve;
 
     };
 
