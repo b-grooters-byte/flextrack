@@ -4,6 +4,7 @@
 #include<memory>
 
 #include "TrackSegment.h"
+#include "BezierCurve.h"
 
 namespace ByteTrail
 {
