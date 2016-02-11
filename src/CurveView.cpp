@@ -155,7 +155,7 @@ void CurveView::DrawCurves(const Cairo::RefPtr<Cairo::Context> &cr)
 void CurveView::DrawCurve(const Cairo::RefPtr<Cairo::Context>& cr,
         std::shared_ptr<BezierCurve> & curve) const
 {
-    cr->set_source_rgb(1.0, 0, 0);
+    cr->set_source_rgb(0, 0, 0);
     cr->set_line_width(1);
 
     std::vector<Point> points = curve->GetCurve(1);
@@ -168,7 +168,6 @@ void CurveView::DrawCurve(const Cairo::RefPtr<Cairo::Context>& cr,
         cr->stroke();
     }
 
-    cr->set_source_rgb(0, 1.0, 0);
     points = curve->GetCurve(2);
     p = points.front();
     for(auto itr = points.begin()+1; itr != points.end(); ++itr)

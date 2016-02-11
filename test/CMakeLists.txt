@@ -9,7 +9,7 @@ include_directories (
 
 add_definitions(-DBOOST_TEST_DYN_LINK)
 
-add_executable (UnitTest Test.cpp )
+add_executable (UnitTest GeometryTest.cpp)
 
 target_link_libraries(
     UnitTest
