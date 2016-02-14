@@ -22,7 +22,29 @@ BOOST_AUTO_TEST_CASE(DistanceTest) {
 
 }
 
+//---------------------------------------------------------------------------------------
+//! \brief Validates undefined slope
+//---------------------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE(UndefinedSlopeTest) {
+    ByteTrail::Point pt_a{0, 0};
+    ByteTrail::Point pt_b{0, 1};
+
+    BOOST_CHECK(std::isnan(pt_a.Slope(pt_b)));
+}
+
+//---------------------------------------------------------------------------------------
+//! \brief Validates slope for defined slopes
+//! Tests several positive and negative slope values including lines with a slope of 0.0
+//! This does not test undefined slopes. For undefined slope test see
+//! UndefinedSlopeTest()
+//---------------------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE(SlopeTest) {
     ByteTrail::Point pt_a{0, 0};
+    ByteTrail::Point pt_b{2, 0};
+
+    BOOST_CHECK_EQUAL(0.0, pt_a.Slope(pt_b));
+
+    pt_b = {2, 2};
+    BOOST_CHECK_EQUAL(1.0, pt_a.Slope(pt_b));
 
 }
