@@ -14,8 +14,14 @@ namespace ByteTrail {
         BezierCurve();
         virtual ~BezierCurve();
 
-        double GetResolution() const;
-        void SetResolution(double resolution);
+        float GetResolution() const;
+        void SetResolution(float resolution);
+
+        float GetLength() const;
+        void  SetLength(float length);
+
+        bool IsFixedLength() const;
+        void SetFixedLength( bool fixed_length );
 
         const Point & GetControlPoint(int index) const;
         void SetControlPoint(const Point & point, unsigned index);
@@ -26,8 +32,6 @@ namespace ByteTrail {
         const std::vector<Point> & GetCurve(unsigned idx);
 
         const std::vector<Point> & GetTangentPoints() const;
-
-
 
     protected:
         static constexpr float kDefaultResolution = 0.025;
@@ -45,10 +49,10 @@ namespace ByteTrail {
                 double distance);
 
 
-        double _resolution;
-        double _length;
+        float _resolution;
+        float _length;
         bool _fixed_length;
-        double _parallels_distance;
+        float _parallels_distance;
 
         Point _control_points[kControlPoints];
         Point m_derivative_ctrl_pts[kDerivativeControlPoints];

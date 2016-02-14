@@ -21,19 +21,19 @@ namespace ByteTrail {
         //dtor
     }
 
-    double BezierCurve::GetResolution() const {
+    float BezierCurve::GetResolution() const {
         return _resolution;
     }
 
-    void BezierCurve::SetResolution(double resolution) {
-        assert(resolution > 0.0 && resolution < 1.0);
+    void BezierCurve::SetResolution(float resolution) {
+        assert(resolution > 0.0F && resolution < 1.0F);
         if (resolution != _resolution) {
             _resolution = resolution;
             _resolution_modified = true;
         }
     }
 
-    const Point &BezierCurve::GetControlPoint(int index) const {
+    const Point & BezierCurve::GetControlPoint(int index) const {
         assert(index >= 0 && index < kControlPoints);
 
         return _control_points[index];
