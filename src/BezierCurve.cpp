@@ -21,6 +21,11 @@ namespace ByteTrail {
         //dtor
     }
 
+    //-----------------------------------------------------------------------------------
+    //! \brief Gets the resolution
+    //! The resolution of the curve is the number of discrete line segments used to
+    //! approximate the curve.
+    //-----------------------------------------------------------------------------------
     float BezierCurve::GetResolution() const {
         return _resolution;
     }
@@ -190,6 +195,4 @@ namespace ByteTrail {
             ++idx;
         }
     }
-
-
 }
