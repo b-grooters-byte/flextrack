@@ -7,12 +7,16 @@
 namespace ByteTrail {
 
 
+    //-----------------------------------------------------------------------------------
+    //! \brief Default constructor
+    //!
+    //! Creates a 0-length bezier curve with defaults
+    //-----------------------------------------------------------------------------------
     BezierCurve::BezierCurve() :
             _resolution(kDefaultResolution),
             _length(kDefaultLength),
             _fixed_length(false),
             _parallels_distance(kDefaultDistance) {
-        _control_points[0].x = 4;
         _resolution_modified = true;
         _control_point_modified = true;
     }
@@ -23,19 +27,50 @@ namespace ByteTrail {
 
     //-----------------------------------------------------------------------------------
     //! \brief Gets the resolution
+    //!
     //! The resolution of the curve is the number of discrete line segments used to
     //! approximate the curve.
+    //!
+    //! \return the resolution of the curve
     //-----------------------------------------------------------------------------------
     float BezierCurve::GetResolution() const {
         return _resolution;
     }
 
+    //-----------------------------------------------------------------------------------
+    //! \brief Sets the resolution
+    //!
+    //! The resolution of the curve is the number of discrete line segments used to
+    //! approximate the curve. The lower the value the higher the resolution of the
+    //! curve.
+    //!
+    //! \param resolution the resolution value for the curve. Resolution is a floating
+    //! point value from 0.0 - 1.0. The smaller the value the greater the resolution.
+    //-----------------------------------------------------------------------------------
     void BezierCurve::SetResolution(float resolution) {
         assert(resolution > 0.0F && resolution < 1.0F);
         if (resolution != _resolution) {
             _resolution = resolution;
             _resolution_modified = true;
         }
+    }
+
+    //-----------------------------------------------------------------------------------
+    //! \brief Gets the length of the curve
+    //!
+    //! \return the length of the curve approximated by the line segments that make up
+    //!         the curve
+    //-----------------------------------------------------------------------------------
+    const double BezierCurve::GetLength() {
+        double len = 0.0;
+
+        const std::vector<Point> &points = GetCurve(0);
+        Point &prev = const_cast<Point &>(points[0]);
+        for(auto itr = points.begin()+1; itr != points.end(); ++itr) {
+            len += prev.Distance(*itr);
+            prev = const_cast<Point &>(*itr);
+        }
+        return len;
     }
 
     const Point & BezierCurve::GetControlPoint(int index) const {
@@ -57,6 +92,13 @@ namespace ByteTrail {
         }
     }
 
+
+    //-----------------------------------------------------------------------------------
+    //! \brief Translates the curve.
+    //!
+    //! The entire curve is translated to a new location. The curve is marked as 'dirty'
+    //! and will have to be recalculated prior to rendering.
+    //-----------------------------------------------------------------------------------
     void BezierCurve::Move(double cx, double cy) {
         if(cx != 0 || cy != 0) {
             for(int i=0; i<kControlPoints; i++) {
@@ -80,6 +122,9 @@ namespace ByteTrail {
 
         std::vector<Point> &points = _curve_points;
         switch (idx) {
+            case 0:
+                // curve points already assigned
+                break;
             case 1:
                 points = _top_left_points;
                 break;
@@ -140,8 +185,6 @@ namespace ByteTrail {
     std::unique_ptr<std::vector<Point>> BezierCurve::RecalculateTangentPoints() const {
         std::unique_ptr<std::vector<Point>> tangent_points =
                 std::unique_ptr<std::vector<Point>>(new std::vector<Point>);
-
-
         int size = (int) (1.0F / _resolution + 1);
 
         // start point = initial control point

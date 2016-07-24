@@ -27,6 +27,7 @@ target_link_libraries(
 target_compile_features(FlexTrack PRIVATE cxx_range_for)
 
 add_executable(FlexTrackDemo Main.cpp)
+
 target_compile_features(FlexTrackDemo PRIVATE cxx_range_for)
 
 target_link_libraries (FlexTrackDemo FlexTrack)

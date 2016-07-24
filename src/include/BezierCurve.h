@@ -17,8 +17,8 @@ namespace ByteTrail {
         float GetResolution() const;
         void SetResolution(float resolution);
 
-        float GetLength() const;
-        void  SetLength(float length);
+        const double GetLength();
+        void  SetLength(double length);
 
         bool IsFixedLength() const;
         void SetFixedLength( bool fixed_length );

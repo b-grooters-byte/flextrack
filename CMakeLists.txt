@@ -10,7 +10,8 @@ add_subdirectory(src)
 add_subdirectory(test)
 
 enable_testing()
-add_test(NAME TestTest COMMAND UnitTest)
+add_test(NAME GeometryTest COMMAND GeometryTest)
+add_test(NAME BezierTest COMMAND BezierTest)
 
 
 if(NOT EXISTS ${CMAKE_CURRENT_BINARY_DIR}/doc)

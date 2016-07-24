@@ -10,13 +10,15 @@ namespace ByteTrail {
     }
 
     //-----------------------------------------------------------------------------------
-    // Gets the slope for 2 points where:
-    //      m =  cy / cx
-    // or:
-    //          (y2 - y1)
-    //      m = ---------
-    //          (x2 - x1)
-    // the point passed in the parameter list is considered as x2, y2
+    //! \brief Gets the slope of a line
+    //!
+    //! Gets the slope for 2 points where:
+    //!      m =  cy / cx
+    //! or:
+    //!          (y2 - y1)
+    //!      m = ---------
+    //!          (x2 - x1)
+    //! the point passed in the parameter list is considered as x2, y2
     //-----------------------------------------------------------------------------------
     double Point::Slope(const Point & other) const {
         double cy = (other.y - y);
