@@ -19,8 +19,19 @@ The Windows build environment is based on [MSYS2](https://msys2.github.io/) and 
 1. Download and install [MSYS2](https://msys2.github.io/).
 2. Follow the installation and update instructions on the [download page](https://msys2.github.io/)
 3. Once you have updated the MSYS2 installation you will need to install the build dependencies. Typically this is done using the pacman tool that you used to update the MSYS2 installation. These tools are installed in the MSYS2 environment, not the native Windows environment so even if you have the native Windows version of some of these tools installed you will need to follow the instructions below.
-4. Install the MinGW build toolchain :
+4. Install the MinGW build toolchain using the pacman tool:
+
+   `pacman -S mingw-w64-x86_64-toolchain`
+
+![Toolchain Install](doc/images/build-win-gcc-toolchain.png)
+
 5. Install the BOOST libraries :
+
+     `pacman -S mingw-w64-x86_64-boost`
+     
+![Boost Install](doc/images/build-win-boost.png)
+     
+
 6. Install CMake:
 7. Install Make:
 8. Install Doxygen:
