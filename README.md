@@ -35,6 +35,15 @@ The Windows build environment is based on [MSYS2](https://msys2.github.io/) and 
 6. Install CMake:
 7. Install Make:
 8. Install Doxygen:
+9. If you have not already then install git
+10. Create a build directory
+
+   `mkdir build`
+   `cd build`
+   
+11. Create Code::Blocks Unix Build files
+   
+    `cmake -G "CodeBlocks - Unix Makefiles"`
 
 ### Linux
 
