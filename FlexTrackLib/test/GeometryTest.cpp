@@ -14,6 +14,9 @@
 //! Test for:  horizontal line, vertical line, positive slope line, negative slope line
 //---------------------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE(DistanceTest) {
+
+    BOOST_TEST_MESSAGE( "Distance Test" );
+
     ByteTrail::Point pt_a{0, 0};
     ByteTrail::Point pt_b{0, 0};
     BOOST_CHECK_EQUAL(0.0, pt_a.Distance(pt_b));

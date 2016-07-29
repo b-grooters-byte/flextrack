@@ -1,0 +1,3 @@
+// the configured options and settings for Tutorial
+#define FLEXTRACK_VERSION_MAJOR @FlexTrack_VERSION_MAJOR@
+#define FLEXTRACK_VERSION_MINOR @FlexTrack_VERSION_MINOR@
