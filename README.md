@@ -23,27 +23,46 @@ The Windows build environment is based on [MSYS2](https://msys2.github.io/) and 
 
    `pacman -S mingw-w64-x86_64-toolchain`
 
-![Toolchain Install](doc/images/build-win-gcc-toolchain.png)
-
 5. Install the BOOST libraries :
 
      `pacman -S mingw-w64-x86_64-boost`
      
-![Boost Install](doc/images/build-win-boost.png)
-     
+6. Install the gtkmm3 libraries and development files
 
-6. Install CMake:
-7. Install Make:
-8. Install Doxygen:
-9. If you have not already then install git
-10. Create a build directory
+     `pacman -S mingw-w64-x86_64-gtkmm3`
+     
+7. Install CMake:
+
+     `pacman -S mingw-w64-x86_64-cmake`
+     
+8. Install Make:
+
+     `pacman -S mingw-w64-x86_64-make`
+
+9. Install Doxygen:
+
+     `pacman -S mingw-w64-x86_64-doxygen`
+
+10. If you have not already then install git so that you have it available in mingw shell
+
+     `pacman -S git`
+
+11. Create a build directory 
 
    `mkdir build`
+   
    `cd build`
    
-11. Create Code::Blocks Unix Build files
+12. Open a mingw64 shell and create Code::Blocks Unix Build files
    
     `cmake -G "CodeBlocks - Unix Makefiles"`
+
+  If you have Code::Blocks installed you can now open the project file that was generated and build from the Code::Blocks IDE or you can build from the command line:
+  
+   `make`
+   
+   `make test`
+  
 
 ### Linux
 
