@@ -2,24 +2,27 @@
 #define BYTETRAIL_FLEXTRACKSEGMENT_H
 
 #include<memory>
+#include <vector>
 
-#include "TrackSegment.h"
+#include "Geometry.h"
 #include "BezierCurve.h"
+#include "TrackSegment.h"
 
-namespace ByteTrail
-{
+namespace ByteTrail {
 
-    class FlexTrackSegment : private TrackSegment
-    {
-        public:
-            FlexTrackSegment();
-            virtual ~FlexTrackSegment();
-        protected:
-        private:
-        std::shared_ptr<BezierCurve> _curve;
+  class FlexTrackSegment : private TrackSegment {
+    public:
+      FlexTrackSegment();
+      virtual ~FlexTrackSegment();
 
-    };
+      void GetTies();
 
+    protected:
+    private:
+      std::shared_ptr<BezierCurve> _curve;
+      std::vector<Polygon> _ties;
+
+  };
 }
 
 #endif // BYTETRAIL_FLEXTRACKSEGMENT_H

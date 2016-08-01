@@ -5,30 +5,29 @@
 
 namespace ByteTrail {
 
-    double Point::Distance(const Point & other) const {
-        return std::sqrt((x - other.x) * (x - other.x) + (y - other.y) * (y - other.y));
-    }
+  double Point::Distance(const Point & other) const {
+      return std::sqrt((x - other.x) * (x - other.x) + (y - other.y) * (y - other.y));
+  }
 
-    //-----------------------------------------------------------------------------------
-    //! \brief Gets the slope of a line
-    //!
-    //! Gets the slope for 2 points where:
-    //!      m =  cy / cx
-    //! or:
-    //!          (y2 - y1)
-    //!      m = ---------
-    //!          (x2 - x1)
-    //! the point passed in the parameter list is considered as x2, y2
-    //-----------------------------------------------------------------------------------
-    double Point::Slope(const Point & other) const {
-        double cy = (other.y - y);
-        double cx = (other.x - x);
-
-        if( cx != 0)
-            return cy / cx;
-        else
-            return std::nan("UNDEFINED");
-    }
+  //---------------------------------------------------------------------------
+  //! \brief Gets the slope of a line
+  //!
+  //! Gets the slope for 2 points where:
+  //!      m =  cy / cx
+  //! or:
+  //!          (y2 - y1)
+  //!      m = ---------
+  //!          (x2 - x1)
+  //! the point passed in the parameter list is considered as x2, y2
+  //---------------------------------------------------------------------------
+  double Point::Slope(const Point & other) const {
+    double cy = (other.y - y);
+    double cx = (other.x - x);
+    if( cx != 0)
+      return cy / cx;
+    else
+      return std::nan("UNDEFINED");
+  }
 
     std::unique_ptr<Point> Point::GetPointFrom(const Point & midpoint) const {
         std::unique_ptr<Point> point = std::unique_ptr<Point>(new Point());
@@ -52,4 +51,31 @@ namespace ByteTrail {
         return ((x >= this->x) && (x <= (this->x + width)) && (y >= this->y) && (y <= (this->y+height)));
     }
 
+  //---------------------------------------------------------------------------
+  //---------------------------------------------------------------------------
+  Polygon::Polygon() {
+  }
+
+  //---------------------------------------------------------------------------
+  //---------------------------------------------------------------------------
+  Polygon::~Polygon() {
+  }
+
+  //---------------------------------------------------------------------------
+  //---------------------------------------------------------------------------
+  Polygon::Add(Point & point) {
+      _points.push_back(point);
+  }
+
+  //---------------------------------------------------------------------------
+  //---------------------------------------------------------------------------
+  const std::vector<Point> & Polygon::GetPoints() const {
+      return _points;
+  }
+
+  //---------------------------------------------------------------------------
+  //---------------------------------------------------------------------------
+  int Polygon::GetSize() const {
+    return _points.size();
+  }
 }
