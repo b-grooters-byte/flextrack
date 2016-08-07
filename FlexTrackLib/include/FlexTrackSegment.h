@@ -15,12 +15,13 @@ namespace ByteTrail {
       FlexTrackSegment();
       virtual ~FlexTrackSegment();
 
+      const std::shared_ptr<BezierCurve> GetCurve();
       void GetTies();
 
     protected:
     private:
       std::shared_ptr<BezierCurve> _curve;
-      std::vector<Polygon> _ties;
+      std::vector<std::shared_ptr<Polygon>> _ties;
 
   };
 }

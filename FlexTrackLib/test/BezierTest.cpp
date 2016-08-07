@@ -20,8 +20,8 @@ namespace ByteTrail {
 BOOST_AUTO_TEST_CASE(DistanceTest, * utf::tolerance(0.00001)) {
     BezierCurve curve;
 
-    Point p1 = {0,0};
-    Point p2 = {10,0};
+    Point p1(0,0);
+    Point p2(10,0);
 
     curve.SetControlPoint(p1, 0);
     curve.SetControlPoint(p1, 1);
@@ -52,10 +52,10 @@ BOOST_AUTO_TEST_CASE(ArcDistanceTest, * utf::tolerance(0.001)) {
 
     double ctrl_offset = 10.0 * 4.0 * (std::sqrt(2.0)-1.0) / 3.0;
     double arc_distance = 2 * M_PI * 10.0 / 4.0;
-    Point p0 = {10,0};
-    Point p1 = {10, ctrl_offset};
-    Point p2 = {ctrl_offset,10};
-    Point p3 = {0,10};
+    Point p0(10,0);
+    Point p1(10, ctrl_offset);
+    Point p2(ctrl_offset,10);
+    Point p3(0,10);
 
     curve.SetControlPoint(p0, 0);
     curve.SetControlPoint(p1, 1);

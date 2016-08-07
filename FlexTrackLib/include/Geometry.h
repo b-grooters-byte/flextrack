@@ -10,9 +10,31 @@ namespace ByteTrail
       double x;
       double y;
 
+      inline Point() {}
+
+      inline Point(double x, double y) {
+          this->x = x;
+          this->y = y;
+      }
+
+      inline Point(const Point & point) {
+          x = point.x;
+          y = point.y;
+      }
+
       double Distance(const Point & other) const;
       double Slope(const Point & other) const;
       std::unique_ptr<Point> GetPointFrom(const Point & midpoint) const;
+
+      inline void operator=(const Point & point) {
+          x = point.x;
+          y = point.y;
+      }
+
+      inline friend bool operator==(const Point & a, const Point & b) {
+          return a.x == b.x && a.y == b.y;
+
+      }
     };
 
     struct Rect {
@@ -31,7 +53,7 @@ namespace ByteTrail
           virtual ~Polygon();
 
           const std::vector<Point> & GetPoints() const;
-          int Add(Point & point);
+          int Add(const Point & point);
           int GetSize() const;
       protected:
       private:

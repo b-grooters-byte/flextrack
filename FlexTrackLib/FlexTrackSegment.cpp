@@ -6,19 +6,25 @@
 namespace ByteTrail
 {
 
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-FlexTrackSegment::FlexTrackSegment() {
-    _curve->SetControlPoint(0, 0, 0);
-    _curve->SetControlPoint(kFlexTrackLength * 0.25, 0,  1);
-    _curve->SetControlPoint(kFlexTrackLength * 0.75, 0, 2);
-    _curve->SetControlPoint(kFlexTrackLength, 0, 3);
-    _curve->SetResolution(kFlexTrackLength / kAverageTieSpacing);
-}
+  //-----------------------------------------------------------------------------
+  //-----------------------------------------------------------------------------
+  FlexTrackSegment::FlexTrackSegment() {
+      _curve = std::make_shared<BezierCurve>();
 
-FlexTrackSegment::~FlexTrackSegment() {
-    //dtor
-}
+      _curve->SetControlPoint(0, 0, 0);
+      _curve->SetControlPoint(kFlexTrackLength * 0.25, 0,  1);
+      _curve->SetControlPoint(kFlexTrackLength * 0.75, 0, 2);
+      _curve->SetControlPoint(kFlexTrackLength, 0, 3);
+      _curve->SetResolution(kFlexTrackLength / kAverageTieSpacing);
+  }
+
+  FlexTrackSegment::~FlexTrackSegment() {
+      //dtor
+  }
+
+  const std::shared_ptr<BezierCurve> FlexTrackSegment::GetCurve() {
+      return _curve;
+  }
 
 
   //---------------------------------------------------------------------------
@@ -31,6 +37,7 @@ FlexTrackSegment::~FlexTrackSegment() {
     // need the +/- tie edges
     const std::vector<Point> & points = _curve->GetCurve(0);
     int idx = 0;
+    double tieLength = kAverageTieLength / 2.0;
     for(auto&& tan_pt : tangent_points) {
       double tan_x = tan_pt.x;
       double tan_y = tan_pt.y;
@@ -38,14 +45,35 @@ FlexTrackSegment::~FlexTrackSegment() {
       double dist = std::sqrt(tan_x * tan_x + tan_y * tan_y);
       tan_x /= dist;
       tan_y /= dist;
-      #offset from the midpoint along the tangent line
-      double pos_x = points[idx].x + kAverageTieWidth / 2.0 * tan_x;
-      double pos_y = points[idx].y + kAverageTieWidth / 2.0 * tan_y;
+      // offset from the midpoint along the tangent line
+      Point pos;
+      pos.x = points[idx].x + kAverageTieWidth / 2.0 * tan_x;
+      pos.y = points[idx].y + kAverageTieWidth / 2.0 * tan_y;
+      // get the normal points for the tangent line offset
+      Point norm;
 
-      pos_x = points[idx].x - kAverageTieWidth / 2.0 * tan_x;
-      pos_y = points[idx].y - kAverageTieWidth / 2.0 * tan_y;
+      std::shared_ptr<Polygon> tie = std::make_shared<Polygon>();
+      // point 1
+      norm.x = pos.x + tan_y * tieLength;
+      norm.y = pos.y - tan_x * tieLength;
+      tie->Add(norm);
+      // point 2
+      norm.x = pos.x - tan_y * tieLength;
+      norm.y = pos.y + tan_x * tieLength;
+      tie->Add(norm);
+
+      pos.x = points[idx].x - kAverageTieWidth / 2.0 * tan_x;
+      pos.y = points[idx].y - kAverageTieWidth / 2.0 * tan_y;
+      // point 3
+      norm.x = pos.x + tan_y * tieLength;
+      norm.y = pos.y - tan_x * tieLength;
+      tie->Add(norm);
+      // point 4
+      norm.x = pos.x - tan_y * tieLength;
+      norm.y = pos.y + tan_x * tieLength;
+      tie->Add(norm);
 
       idx++;
     }
   }
-} // namepace ByteTrail
+} // namespace ByteTrail
