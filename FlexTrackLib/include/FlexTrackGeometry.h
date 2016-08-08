@@ -3,9 +3,8 @@
 
 #include <BezierCurve.h>
 
-
-class FlexTrackGeometry : public BezierCurve
-{
+namespace ByteTrail {
+  class FlexTrackGeometry : public BezierCurve {
     public:
         /** Default constructor */
         FlexTrackGeometry();
@@ -15,6 +14,7 @@ class FlexTrackGeometry : public BezierCurve
     protected:
 
     private:
-};
+  };
+}
 
 #endif // FLEXTRACKGEOMETRY_H_INCLUDED

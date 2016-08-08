@@ -1,11 +1,11 @@
 #include "FlexTrackGeometry.h"
 
-FlexTrackGeometry::FlexTrackGeometry()
-{
+namespace ByteTrail {
+  FlexTrackGeometry::FlexTrackGeometry() {
     //ctor
-}
+  }
 
-FlexTrackGeometry::~FlexTrackGeometry()
-{
+  FlexTrackGeometry::~FlexTrackGeometry() {
     //dtor
-}
+  }
+};

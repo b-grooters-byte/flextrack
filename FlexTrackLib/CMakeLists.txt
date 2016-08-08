@@ -46,6 +46,7 @@ add_library(
 	Connector.cpp
 	CurveView.cpp
 	TrackSegment.cpp
+	FlexTrackGeometry.cpp
 	FlexTrackSegment.cpp
 	CurveView.cpp
 	
@@ -53,6 +54,7 @@ add_library(
 	include/BezierCurve.h
 	include/Connector.h
 	include/CurveView.h
+	include/FlexTrackGeometry.h
 	include/FlexTrackSegment.h
 	include/Geometry.h
 	include/NScale.h

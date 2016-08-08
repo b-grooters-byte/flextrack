@@ -62,20 +62,30 @@ namespace ByteTrail {
   }
 
   //---------------------------------------------------------------------------
+  //! \brief Adds a point to the polygon
   //---------------------------------------------------------------------------
   Polygon::Add(const Point & point) {
-      _points.push_back(Point(point));
+    std::shared_ptr<PathSegment> segment = std::make_shared<PathSegment>();
+    if(_path.empty()) {
+      _path.push_back(std::make_shared<PathSegment>(PATH_SEGMENT_CLOSE));
+      segment->type = SEG_MOVE_TO;
+    } else {
+        segment->type = SEG_LINE_TO;
+    }
+    std::shared_ptr<Point> pt = std::make_shared<Point>(point);
+    segment->point = std::move(pt);
+    _path.insert(_path.end(), segment);
   }
 
   //---------------------------------------------------------------------------
   //---------------------------------------------------------------------------
-  const std::vector<Point> & Polygon::GetPoints() const {
-      return _points;
+  const std::list<std::shared_ptr<PathSegment>> & Polygon::GetPath() {
+      return _path;
   }
 
   //---------------------------------------------------------------------------
   //---------------------------------------------------------------------------
   int Polygon::GetSize() const {
-    return _points.size();
+    return _path.size();
   }
 }

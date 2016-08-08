@@ -3,9 +3,25 @@
 
 #include <memory>
 #include <vector>
+#include <list>
 
-namespace ByteTrail
-{
+namespace ByteTrail {
+
+    struct Point;
+
+    enum SegmentType {
+        SEG_MOVE_TO,
+        SEG_LINE_TO,
+        SEG_CLOSE
+    };
+
+    struct PathSegment {
+        SegmentType type;
+        std::shared_ptr<Point> point;
+    };
+
+    const PathSegment PATH_SEGMENT_CLOSE{SEG_CLOSE, nullptr};
+
     struct Point {
       double x;
       double y;
@@ -47,17 +63,23 @@ namespace ByteTrail
       bool Contains(double x, double y) const;
     };
 
-    class Polygon {
+  class Path {
+    public:
+         virtual const std::list<std::shared_ptr<PathSegment>> & GetPath() = 0;
+  };
+
+    class Polygon : private Path {
       public:
           Polygon();
           virtual ~Polygon();
 
-          const std::vector<Point> & GetPoints() const;
+          //const std::vector<Point> & GetPoints() const;
+          const std::list<std::shared_ptr<PathSegment>> & GetPath();
           int Add(const Point & point);
           int GetSize() const;
       protected:
       private:
-          std::vector<Point> _points;
+          std::list<std::shared_ptr<PathSegment>> _path;
     };
 
 }

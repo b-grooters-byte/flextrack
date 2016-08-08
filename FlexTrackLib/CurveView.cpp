@@ -2,47 +2,51 @@
 #include <cmath>
 #include "CurveView.h"
 
-namespace ByteTrail
-{
+namespace ByteTrail {
 
-    static std::valarray<double> dashes(2);
+  static std::valarray<double> dashes(2);
 
-    void SetDashPattern()
-    {
-        dashes[0] = 4.0;
-        dashes[1] = 4.0;
-    }
+  static Polygon polygon;
+
+  void SetDashPattern(){
+    dashes[0] = 4.0;
+    dashes[1] = 4.0;
+  }
 
 
-CurveView::CurveView() : _scale(1.0F), _resolution(0.025F),
-        _edit_mode(false), _dragging(false), _sections(3)
-{
+  CurveView::CurveView() : _scale(1.0F), _resolution(0.025F),
+        _edit_mode(false), _dragging(false), _sections(3) {
 
     SetDashPattern();
 
+    Point p(10, 10);
+    polygon.Add(p);
+    p.x = 100;
+    polygon.Add(p);
+    p.y=50;
+    polygon.Add(p);
+    p.x=10;
+    polygon.Add(p);
+
     int x, y;
 
-    for(int i=0; i<3; i++)
-    {
-        std::shared_ptr<BezierCurve> curve = std::make_shared<BezierCurve>(BezierCurve());
+    for(int i=0; i<3; i++) {
+      std::shared_ptr<BezierCurve> curve = std::make_shared<BezierCurve>(BezierCurve());
 
-        if(i == 0 )
-        {
-            x = std::rand() % 250;
-            y = std::rand() % 250;
-            curve->SetControlPoint(x, y, 0);
-            x = std::rand() % 250;
-            y = std::rand() % 250;
-            curve->SetControlPoint(x, y, 1);
-        }
-        else
-        {
-            const Point p3  = _curves.back()->GetControlPoint(3);
-            curve->SetControlPoint(p3.x, p3.y, 0);
-            const Point p2 = _curves.back()->GetControlPoint(2);
-            std::unique_ptr<Point> p = p2.GetPointFrom(p3);
-            curve->SetControlPoint(p->x, p->y, 1);
-        }
+      if(i == 0 ) {
+        x = std::rand() % 250;
+        y = std::rand() % 250;
+        curve->SetControlPoint(x, y, 0);
+        x = std::rand() % 250;
+        y = std::rand() % 250;
+        curve->SetControlPoint(x, y, 1);
+      } else {
+        const Point p3  = _curves.back()->GetControlPoint(3);
+        curve->SetControlPoint(p3.x, p3.y, 0);
+        const Point p2 = _curves.back()->GetControlPoint(2);
+        std::unique_ptr<Point> p = p2.GetPointFrom(p3);
+        curve->SetControlPoint(p->x, p->y, 1);
+      }
 
         x = std::rand() % 250;
         y = std::rand() % 250;
@@ -102,6 +106,26 @@ bool CurveView::on_draw(const Cairo::RefPtr<Cairo::Context>& cr)
     // coordinates for the center of the window
 
     cr->scale(_scale, _scale);
+
+    cr->set_source_rgb(0.0, 0.75, 0.0);
+    cr->set_line_width(2);
+    std::cout << "POLYGON" << std::endl;
+    for(auto & seg : polygon.GetPath()) {
+      std::cout << "SEGMENT: ";
+      switch(seg->type) {
+      case SEG_MOVE_TO:
+        cr->move_to(seg->point->x, seg->point->y);
+        break;
+      case SEG_LINE_TO:
+        std::cout << "LINE_TO: " << (seg->point->x) << ',' << seg->point->y << std::endl;
+        cr->line_to(seg->point->x, seg->point->y);
+        break;
+      case SEG_CLOSE:
+        break;
+      }
+    }
+
+    cr->stroke();
 
     if(_edit_mode)
     {
